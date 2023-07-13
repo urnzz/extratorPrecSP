@@ -21,7 +21,7 @@ headers = ["nº de ordem cronológica", "processo", "processo de origem", "vara"
 with open(output_csv, 'w', newline='', encoding='utf-8') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=headers, delimiter=';')
     writer.writeheader()
-    
+
     # Loop through each file in the directory
     for filename in os.listdir(pdf_dir):
         if filename.endswith('.pdf'):
@@ -37,7 +37,7 @@ with open(output_csv, 'w', newline='', encoding='utf-8') as csvfile:
 
                 # Split the text into lines
                 lines = text.split('\n')
-                
+
                 # Process each line
                 for line in lines:
                     # Check if the line contains ':'
@@ -52,8 +52,10 @@ with open(output_csv, 'w', newline='', encoding='utf-8') as csvfile:
                             # Store the value in the data dictionary
                             data[key] = value
 
-                # Write the data to the CSV file
-                writer.writerow(data)
+                # Check if the required key is present in the data dictionary
+                if "nº de ordem cronológica" in data:
+                    # Write the data to the CSV file
+                    writer.writerow(data)
 
             # Close the Document instance
             doc.close()
